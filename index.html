@@ -21,17 +21,69 @@
         <nav class="navbar navbar-light bg-light">
             <h1>Search for a City</h1>
             <form class="form-inline">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <input id="searchedCity" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" id="searchBtn" type="submit">Search</button>
+                <button class="btn btn-outline-danger my-2 my-sm-0" id="clearbutton">Clear History</button>
+                <ul class="history">
+
+                </ul>
             </form>
         </nav>
     </div>
-    <section class="rightSide col">
-        <div class="current" id="currentWeather">
+
+    <!-- current date weather -->
+    <div class="col d-none oneDay">
+        <div class="card">
+            <div class="card-body">
+                <h2 id="cityName"></h2>
+                <img id="current-weather"></img>
+                <p>Temperature: <span id="temperature"></span></p>
+                <p>Humidity: <span id="humidity"></span></p>
+                <p>Wind-Speed: <span id="wind"></span></p>
+                <p>UV-Index: <span id="UV"></span></p>
+            </div>
         </div>
-        <div class="5DayForecast" id="fiveDay">
+    </div>
+    <!-- 5 day -->
+    <div class="container-fluid col d-none fiveDay"></div>
+        <div>
+            <h2>5 Day Forecast</h2>
         </div>
-    </section>
+        <div class="row">
+            <div class="col forecast">
+                <p id="fiveDay1"></p>
+                <p id="fiveDayPic1"></p>
+                <p>Temp: <span id="fiveTemp1"></span></p>
+                <p>Humidity: <span id="fiveHumid1"></span></p>
+            </div>
+            <div class="col forecast">
+                <p id="fiveDay2"></p>
+                <p id="fiveDayPic2"></p>
+                <p>Temp: <span id="fiveTemp2"></span></p>
+                <p>Humidity: <span id="fiveHumid2"></span></p>
+            </div>
+            <div class="col forecast">
+                <p id="fiveDay3"></p>
+                <p id="fiveDayPic3"></p>
+                <p>Temp: <span id="fiveTemp3"></span></p>
+                <p>Humidity: <span id="fiveHumid3"></span></p>
+            </div>
+            <div class="col forecast">
+                <p id="fiveDay4"></p>
+                <p id="fiveDayPic4"></p>
+                <p>Temp: <span id="fiveTemp4"></span></p>
+                <p>Humidity: <span id="fiveHumid4"></span></p>
+            </div>
+            <div class="col forecast">
+                <p id="fiveDay5"></p>
+                <p id="fiveDayPic5"></p>
+                <p>Temp: <span id="fiveTemp5"></span></p>
+                <p>Humidity: <span id="fiveHumid5"></span></p>
+            </div>
+        </div>
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="assets/js/script.js"></script>
