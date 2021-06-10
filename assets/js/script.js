@@ -9,21 +9,21 @@ var currentWind =  $("#wind");
 var currentUV =  $("#UV");
 var oneDay = document.querySelector(".oneDay");
 var fiveDay  =  document.querySelector(".fiveDay");
-var town = "";
+var city = "";
 var searchCity = [];
 var APIKey = "f9c15286492755d4a33357c931d9c1c8"
 
 function citySearch(event) {
     event.preventDefault();
     if (cityEnter.val().trim() !== "") {
-        town = cityenter.val().trim();
+        city = cityenter.val().trim();
         weather(city);
         oneDay.classList.remove("d-none");
         fiveDay.classList.remove("d-none");
     }
 }
 
-function duplicate(town) {
+function duplicate(city) {
     for (var i = 0; i < searchCity.length; i++) {
         if(city.toUpperCase() === searchCity[i]){
             return -1;
@@ -43,8 +43,8 @@ function historySearch(event) {
     event.preventDefault();
     var listEl = event.target
     if (event.target.matches("li")) {
-        town = listEl.textContent.trim();
-        weather(town);
+        city = listEl.textContent.trim();
+        weather(city);
 
     }
 }
@@ -58,17 +58,17 @@ function lastSearched() {
         for (i = 0; i < searchedCity.length; i++) {
             addHistory(searchedCity[i]);
         }
-        town = searchedCity[i - 1];
-        currentWeather(town);
+        city = searchedCity[i - 1];
+        currentWeather(city);
     }
 }
 $(window).on("load", lastSearched);
 
-function currentWeather(town) {
-    console.log(town)
-    var apiUrl = "https://openweathermap.org/api.openweathermap.org/data/2.5/weather?q=" + town + "&units=imperial&appid=f9c15286492755d4a33357c931d9c1c8";
+function currentWeather(city) {
+    console.log(city)
+    var apiUrl = "https://openweathermap.org/api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=f9c15286492755d4a33357c931d9c1c8";
     
-    fetch(apiUrl)
+    fetch("https://openweathermap.org/api.openweathermap.org/data/2.5/weather?id={city}&units=imperial&appid=f9c15286492755d4a33357c931d9c1c8")
         .then(function (response) {
             response.json()
                 .then(function (data) {
@@ -87,15 +87,15 @@ function currentWeather(town) {
                         console.log(citysearched);
                         if(citysearched == null) {
                             citysearched = [];
-                            searchedCity.push(town.toUpperCase());
+                            searchedCity.push(city.toUpperCase());
                             localStorage.setItem("cityname", JSON.stringify(citysearched));
-                            addHistory(town);
+                            addHistory(city);
                         }
                         else {
-                            if(find(town) > 0) {
-                                citySearched.push(town.toUpperCase());
+                            if(find(city) > 0) {
+                                citySearched.push(city.toUpperCase());
                                 localStorage.setItem("cityname", JSON.stringify(citysearched));
-                                addHistory(town);
+                                addHistory(city);
                             }
                         }
                     }
