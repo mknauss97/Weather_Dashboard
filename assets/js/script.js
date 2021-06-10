@@ -66,7 +66,7 @@ $(window).on("load", lastSearched);
 
 function currentWeather(town) {
     console.log(town)
-    var apiUrl = "https://openweathermap.org/api.openweathermap.org/data/2.5/weather?q=" + town +"&appid=" + APIKey;
+    var apiUrl = "https://openweathermap.org/api.openweathermap.org/data/2.5/weather?q=" + town + "&units=imperial&appid=f9c15286492755d4a33357c931d9c1c8";
     
     fetch(apiUrl)
         .then(function (response) {
