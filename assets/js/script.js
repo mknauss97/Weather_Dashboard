@@ -64,18 +64,21 @@ function lastSearched() {
 }
 $(window).on("load", lastSearched);
 
-function currentWeather(city) {
-    console.log(city)
-    var apiUrl = "https://openweathermap.org/api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=f9c15286492755d4a33357c931d9c1c8";
-    
-    fetch("https://openweathermap.org/api.openweathermap.org/data/2.5/weather?id={city}&units=imperial&appid=f9c15286492755d4a33357c931d9c1c8")
+function currentWeather(town) {
+    console.log(town)
+    var searchInput = document.querySelector('#search-input'); 
+    console.log(searchedCity.input);
+    var search = searchInput.value.trim();
+    var apiUrl = "https://openweathermap.org/api.openweathermap.org/data/2.5/weather?q=" + search + "&units=imperial&appid=f9c15286492755d4a33357c931d9c1c8";
+    console.log(search);
+    fetch(apiUrl)
         .then(function (response) {
             response.json()
                 .then(function (data) {
                     console.log(data)
                     var date = new Date(data.dt*1000).toLocaleDateString();
                     var weatherimg = data.weather[0].icon;
-                    var iconHttps = "https://openweathermap.org/img/wn/" + weatherPicture + "@2x.png";
+                    var iconHttps = "https://openweathermap.org/img/wn/" + weatherimg + "@2x.png";
                     city.html(data.name + "(" + date + ")" + "<img src=" + iconHttps + ">");
                     currentTemp.html(data.main.temp + "F");
                     currentHumid.html(data.main.humidity + "%");
@@ -87,15 +90,15 @@ function currentWeather(city) {
                         console.log(citysearched);
                         if(citysearched == null) {
                             citysearched = [];
-                            searchedCity.push(city.toUpperCase());
+                            searchedCity.push(town.toUpperCase());
                             localStorage.setItem("cityname", JSON.stringify(citysearched));
-                            addHistory(city);
+                            addHistory(town);
                         }
                         else {
-                            if(find(city) > 0) {
-                                citySearched.push(city.toUpperCase());
+                            if(find(town) > 0) {
+                                citySearched.push(town.toUpperCase());
                                 localStorage.setItem("cityname", JSON.stringify(citysearched));
-                                addHistory(city);
+                                addHistory(town);
                             }
                         }
                     }
