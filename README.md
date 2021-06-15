@@ -21,8 +21,8 @@ type in the city you would like to view. It will give current weather, Humidity,
 
 ## Contribution: 
 
-## Testing: 
-
+## deployed page: 
+https://mknauss97.github.io/Weather_Dashboard/
 ## Photo:
 ![screenshot](/imgs/Capture.JPG)
 
