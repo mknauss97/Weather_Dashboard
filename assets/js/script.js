@@ -8,7 +8,7 @@ var currentHumid = $("#humidity");
 var currentWind =  $("#wind");
 var currentUV =  $("#UV");
 var oneDay = document.querySelector(".oneDay");
-var fiveDay  =  document.querySelector(".fiveDay");
+var fiveDay  =  document.querySelector(".forecast");
 var city = "";
 var searchCity = [];
 var APIKey = "f9c15286492755d4a33357c931d9c1c8"
@@ -64,13 +64,11 @@ function lastSearched() {
 }
 $(window).on("load", lastSearched);
 
-function currentWeather(town) {
-    console.log(town)
-    var searchInput = document.querySelector('#search-input'); 
-    console.log(searchedCity.input);
+function currentWeather(search) {
+    var searchInput = document.querySelector('#searchedCity'); 
     var search = searchInput.value.trim();
-    var apiUrl = "https://openweathermap.org/api.openweathermap.org/data/2.5/weather?q=" + search + "&units=imperial&appid=f9c15286492755d4a33357c931d9c1c8";
-    console.log(search);
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + search + "&appid=f9c15286492755d4a33357c931d9c1c8";
+    
     fetch(apiUrl)
         .then(function (response) {
             response.json()
@@ -79,26 +77,27 @@ function currentWeather(town) {
                     var date = new Date(data.dt*1000).toLocaleDateString();
                     var weatherimg = data.weather[0].icon;
                     var iconHttps = "https://openweathermap.org/img/wn/" + weatherimg + "@2x.png";
-                    city.html(data.name + "(" + date + ")" + "<img src=" + iconHttps + ">");
+                    cityPic.html(data.name + "(" + date + ")" + "<img src=" + iconHttps + ">");
                     currentTemp.html(data.main.temp + "F");
                     currentHumid.html(data.main.humidity + "%");
                     currentWind.html(data.wind.speed + "mph");
                     UVIndex(data.coord.lon, data.coord.lat);
-                    fiveDay(data.id)
+                    fiveForecast(data.id)
                     if(data.cod ==200) {
                         citysearched =JSON.parse(localStorage.getItem("cityname"));
                         console.log(citysearched);
+
                         if(citysearched == null) {
-                            citysearched = [];
-                            searchedCity.push(town.toUpperCase());
+                            citySearched = [];
+                            citySearched.push(city.toUpperCase());
                             localStorage.setItem("cityname", JSON.stringify(citysearched));
-                            addHistory(town);
+                            addHistory(city);
                         }
                         else {
-                            if(find(town) > 0) {
-                                citySearched.push(town.toUpperCase());
+                            if(find(city) > 0) {
+                                citySearched.push(city.toUpperCase());
                                 localStorage.setItem("cityname", JSON.stringify(citysearched));
-                                addHistory(town);
+                                addHistory(city);
                             }
                         }
                     }
@@ -118,19 +117,19 @@ function UVIndex(latitude, longitude) {
                 var badge = document.querySelector("#UV")
 
                 if(response.value < 2) {
-                    badgeColor.classList.add("badge", "bg-success");
-                    badgeColor.classList.remove("badge", "bg-danger");
-                    badgeColor.classList.remove("badge", "bg-warning");
+                    badge.classList.add("badge", "bg-success");
+                    badge.classList.remove("badge", "bg-danger");
+                    badge.classList.remove("badge", "bg-warning");
                 }
                 else if (response.value > 2 && response.value < 5) {
-                    badgeColor.classList.add("badge", "bg-warning");
-                    badgeColor.classList.remove("badge", "bg-success");
-                    badgeColor.classList.remove("badge", "bg-danger");
+                    badge.classList.add("badge", "bg-warning");
+                    badge.classList.remove("badge", "bg-success");
+                    badge.classList.remove("badge", "bg-danger");
                 }
                 else {
-                    badgeColor.classList.add("badge", "bg-danger");
-                    badgeColor.classList.remove("badge", "bg-warning");
-                    badgeColor.classList.remove("badge", "bg-success")
+                    badge.classList.add("badge", "bg-danger");
+                    badge.classList.remove("badge", "bg-warning");
+                    badge.classList.remove("badge", "bg-success")
                 }
             })
         })
@@ -144,7 +143,7 @@ function fiveForecast (id) {
         response.json()
         .then(function (data) {
             console.log(data);
-            for(i = 0; i < 5; i++) {
+            for(i = 0; i < 6; i++) {
                 var fiveD = new Date((data.list[((i + 1) * 8) - 1].dt) * 1000).toLocaleDateString();
                 var fivePic = data.list[((i + 1) * 8) - 1].weather[0].icon;
                 var fivePicURL = "https://openweathermap.org/img/wn/" + fivePic + ".png";
@@ -162,3 +161,4 @@ function fiveForecast (id) {
 
 searchBtn.click(currentWeather);
 
+"https://api.openweathermap.org/data/2.5/weather?q=" + "&appid=f9c15286492755d4a33357c931d9c1c8"
